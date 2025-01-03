@@ -37,6 +37,16 @@ export const routes: Routes = [
         // In the routes configuration, the users/:userId route has a children array. 
         // This means that within the UserTasksComponent, there will be further nested routes that load different components based on the path.
         {
+          path: '',  // localhost:4200/users/<userId>
+          redirectTo: 'tasks', // this means to redirect to localhost:4200/users/<userId>/tasks when the user visits localhost:4200/users/<userId>
+          pathMatch: 'prefix' // pathMatch defines how the path should match the URL. In this case, 'prefix' means that the route will match 
+          // as long as the provided URL starts with the given path (which is the empty string in this case).
+
+          // When a user visits /users/:userId (e.g., /users/123), you want to automatically show them the tasks page (/users/123/tasks) 
+          // without requiring the user to manually navigate to that sub-path.
+          // This route will automatically redirect to second child below:
+        },
+        {
             path: 'tasks',  // localhost:4200/users/<userId>/tasks
             component: TasksComponent
             // /users/:userId/tasks will render the TasksComponent.
