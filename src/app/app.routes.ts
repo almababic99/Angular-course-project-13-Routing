@@ -8,6 +8,7 @@ import { TasksComponent } from './tasks/tasks.component';
 import { NoTaskComponent } from './tasks/no-task/no-task.component';
 import { UserTasksComponent } from './users/user-tasks/user-tasks.component';
 import { NewTaskComponent } from './tasks/new-task/new-task.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 export const routes: Routes = [ 
   // Routes -> Angular type that defines an array of route objects, where each object represents a route in the application.
@@ -47,5 +48,14 @@ export const routes: Routes = [
         }
         // router-outlet tag in user-tasks.component.html will be the place where the child routes (TasksComponent, NewTaskComponent) are rendered.
     ]
+  },
+  {
+    path: '**',
+    component: NotFoundComponent,
+    // The path: '**' is a special route in Angular's routing system.
+    // It acts as a catch-all route, meaning it will match any URL that does not match any of the other specified paths in your routing configuration.
+    // This is typically used for handling "404 Not Found" errors or for rendering a fallback component when the user navigates to a URL that 
+    // doesn't exist in the application's defined routes.
+    // When a user navigates to a route that doesn't match any of the other defined routes, the NotFoundComponent will be rendered.
   }
 ];
