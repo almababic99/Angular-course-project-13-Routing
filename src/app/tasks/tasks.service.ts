@@ -2,9 +2,12 @@ import { Injectable, signal } from '@angular/core';
 
 import { type NewTaskData } from './task/task.model';
 
+// his service manages the tasks and provides methods for adding, removing, and saving them. 
+// It interacts with localStorage to persist the task data across page reloads.
+
 @Injectable({ providedIn: 'root' })
 export class TasksService {
-  private tasks = signal([
+  private tasks = signal([   // A reactive signal containing an array of tasks.
     {
       id: 't1',
       userId: 'u1',
@@ -31,8 +34,10 @@ export class TasksService {
   ]);
 
   allTasks = this.tasks.asReadonly();
+  // A readonly version of the tasks signal that ensures the tasks cannot be modified directly outside the service.
 
-  constructor() {
+  constructor() {  
+    // On initialization, the service checks if there are any tasks stored in localStorage. If tasks exist, it loads them into the tasks signal.
     const tasks = localStorage.getItem('tasks');
 
     if (tasks) {
@@ -41,6 +46,7 @@ export class TasksService {
   }
 
   addTask(taskData: NewTaskData, userId: string) {
+    // This method allows adding a new task. It creates a task object and adds it to the tasks signal. The task is then saved in localStorage.
     this.tasks.update((prevTasks) => [
       {
         id: new Date().getTime().toString(),
@@ -55,6 +61,7 @@ export class TasksService {
   }
 
   removeTask(id: string) {
+    // This method removes a task from the tasks signal by filtering out the task with the specified id and then saves the updated list in localStorage
     this.tasks.update((prevTasks) =>
       prevTasks.filter((task) => task.id !== id)
     );
@@ -62,6 +69,7 @@ export class TasksService {
   }
 
   private saveTasks() {
+    // This private method saves the current list of tasks into localStorage by converting the tasks signal into a JSON string.
     localStorage.setItem('tasks', JSON.stringify(this.tasks()));
   }
 }

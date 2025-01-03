@@ -1,7 +1,7 @@
 <p>{{ userId() }}</p>
 
 <ul>
-  @for (task of userTasks; track task.id) {
+  @for (task of userTasks(); track task.id) {  <!-- userTasks() is in tasks.component.ts -->
     <li>
       <app-task [task]="task" />
     </li>
