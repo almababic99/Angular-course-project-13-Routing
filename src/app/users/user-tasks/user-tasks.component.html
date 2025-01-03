@@ -2,9 +2,15 @@
   <header>
     <h2>{{ userName() }} Tasks</h2>  <!-- Displays the user's name dynamically using userName() from user-tasks.component.ts -->
     <menu>
-      <a>Add Task</a>
+      <a routerLink="tasks/new">Add Task</a>  <!-- Link to the 'new' task page -->
+      <!-- This link uses the routerLink directive to navigate to the tasks/new route within the user's page. It will load the NewTaskComponent 
+       when clicked. The tasks/new route is relative to the current route, which means it will resolve to /users/:userId/tasks/new, where :userId 
+       is the current dynamic route parameter. -->
     </menu>
   </header>
 
-  <p>Todo ...</p>
+  <router-outlet />
+  <!-- The <router-outlet /> directive is where the child components of the current route will be rendered. -->
+  <!-- When navigating to /users/:userId/tasks, the TasksComponent will be displayed inside the <router-outlet />. 
+   Similarly, when navigating to /users/:userId/tasks/new, the NewTaskComponent will be displayed there. -->
 </section>
