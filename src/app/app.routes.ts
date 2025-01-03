@@ -5,14 +5,21 @@
 
 import { Routes } from '@angular/router';
 import { TasksComponent } from './tasks/tasks.component';
+import { NoTaskComponent } from './tasks/no-task/no-task.component';
 
 export const routes: Routes = [ 
   // Routes -> Angular type that defines an array of route objects, where each object represents a route in the application.
+  // routes is an array of route objects. Each object in this array defines:
+    // A path: The URL the user should visit to trigger the associated component.
+    // A component: The component that should be displayed when the user navigates to the given path.
   {
-    path: 'tasks',
+    path: '',   // localhost:4200/
+    component: NoTaskComponent,
+    // When the user navigates to localhost:4200/, the NoTaskComponent will be rendered.
+  },
+  {
+    path: 'tasks',   // localhost:4200/tasks
     component: TasksComponent,
-    // path: The URL path for this route, in this case, it’s 'tasks'. 
-    // component: The component associated with this route, here it's TasksComponent. 
-    // When the user navigates to /tasks, the TasksComponent will be rendered.
+    // When the user navigates to localhost:4200/tasks, the TasksComponent will be rendered.
   },
 ];
