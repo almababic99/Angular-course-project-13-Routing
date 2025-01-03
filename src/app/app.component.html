@@ -4,6 +4,9 @@
   <app-users />
 
   <div>
-    <p>Todo ...</p>
+    <router-outlet />
+    <!-- The content inside <router-outlet /> is dynamically rendered based on the current route. 
+     When the user navigates to a different route (like /tasks), Angular swaps out the component inside the router-outlet accordingly. -->
+    <!-- RouterOutlet must be added in imports in app.component.ts -->
   </div>
 </main>
