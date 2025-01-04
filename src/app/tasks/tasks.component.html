@@ -1,4 +1,11 @@
-<p>{{ userId() }}</p>
+<p>
+  <a routerLink="./" [queryParams]="{order: order() === 'asc' ? 'desc' : 'asc'}">
+    Sort {{ order() === 'asc' ? 'Descending' : 'Ascending' }}
+  </a>
+  <!-- When clicked, the queryParams changes the URL, passing the new sorting order (asc or desc).
+The link displays whether the order is currently ascending or descending. -->
+  <!-- This toggles the sort order and updates the view based on the new value. -->
+</p>
 
 <ul>
   @for (task of userTasks(); track task.id) {  <!-- userTasks() is in tasks.component.ts -->

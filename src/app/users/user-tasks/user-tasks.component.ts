@@ -1,6 +1,6 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { UsersService } from '../users.service';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-user-tasks',
