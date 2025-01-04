@@ -52,6 +52,9 @@ export const routes: Routes = [
     resolve: {
       userName: resolveUserName
     }
+    // The resolve property is used to call the resolveUserName function before the UserTasksComponent is activated. 
+    // This ensures that the user's name is fetched and available to the component when it loads.
+    // The resolved data is accessible in the component as an input property (in this case, userName).
   },
   {
     path: '**',

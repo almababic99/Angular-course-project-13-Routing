@@ -28,6 +28,7 @@ export class UserTasksComponent {
 
   userName = input.required<string>();
   // userName is input property that is required.
+  // The value of userName will be resolved by the resolveUserName resolver before the component is activated
   message = input.required<string>();
   // message is input property that is required. It is expected to be passed to the component when it is used, from app.routes.ts
 
@@ -49,3 +50,12 @@ export const resolveUserName: ResolveFn<string> = (
     )?.name || '';
   return userName;
 };
+
+// The resolveUserName function is defined as a route resolver using the ResolveFn type.
+// Resolvers in Angular are used to fetch data before a route is activated. This is useful when you need to pre-fetch data 
+// (e.g., user data) before displaying the component, which ensures the component has all the necessary data when it's rendered.
+// The resolveUserName function uses Angular's activatedRoute.paramMap to access the route's userId parameter, 
+// which was passed in the URL (e.g., /users/123).
+// It then uses the UsersService to search for the user in the users array based on the userId.
+// The function returns the user's name (or an empty string if not found).
+// This resolved value is passed to the component via the resolve property in the route configuration (app.routes.ts)
