@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { TasksComponent } from '../tasks/tasks.component';
+import { resolveUserTasks, TasksComponent } from '../tasks/tasks.component';
 import { NewTaskComponent } from '../tasks/new-task/new-task.component';
 
 // we use this users.routes.ts in app.routes.ts
@@ -19,6 +19,15 @@ export const routes: Routes = [
     path: 'tasks', // localhost:4200/users/<userId>/tasks
     component: TasksComponent,
     // /users/:userId/tasks will render the TasksComponent.
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange',
+    // The runGuardsAndResolvers: 'paramsOrQueryParamsChange' ensures that the resolver is re-run if either the route parameters or query 
+    // parameters change. This is useful for keeping the task list updated when the userId or order changes.
+    resolve: {
+      userTasks: resolveUserTasks,
+    },
+    // resolveUserTasks function is defined as a resolver function. This resolver will be executed when the route is activated, 
+    // and it will fetch the required data (in this case, the tasks for a user). 
+    // The resolved data will then be injected into the TasksComponent as an input, and the component can use it immediately.
   },
   {
     path: 'tasks/new', // localhost:4200/users/<userId>/tasks/new
