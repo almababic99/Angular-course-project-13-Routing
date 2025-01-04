@@ -5,7 +5,7 @@
 
 import { Routes } from '@angular/router';
 import { NoTaskComponent } from './tasks/no-task/no-task.component';
-import { resolveUserName, UserTasksComponent } from './users/user-tasks/user-tasks.component';
+import { resolveTitle, resolveUserName, UserTasksComponent } from './users/user-tasks/user-tasks.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { routes as userRoutes } from './users/users.routes';
 // importing the routing configuration for user-related routes from a separate file, specifically the users.routes.ts file.
@@ -23,6 +23,7 @@ export const routes: Routes = [
     path: '', // localhost:4200/
     component: NoTaskComponent,
     // When the user navigates to localhost:4200/, the NoTaskComponent will be rendered.
+    title: 'No task selected',
   },
   //   {
   //     path: 'tasks',   // localhost:4200/tasks
@@ -51,10 +52,13 @@ export const routes: Routes = [
     // We display this message in user-tasks.component.ts
     resolve: {
       userName: resolveUserName
-    }
+    },
     // The resolve property is used to call the resolveUserName function before the UserTasksComponent is activated. 
     // This ensures that the user's name is fetched and available to the component when it loads.
     // The resolved data is accessible in the component as an input property (in this case, userName).
+    title: resolveTitle
+    // This means that the resolveTitle function from user-tasks.component.ts will be invoked to determine the title before 
+    // the UserTasksComponent is displayed.
   },
   {
     path: '**',

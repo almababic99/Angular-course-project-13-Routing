@@ -52,10 +52,23 @@ export const resolveUserName: ResolveFn<string> = (
 };
 
 // The resolveUserName function is defined as a route resolver using the ResolveFn type.
-// Resolvers in Angular are used to fetch data before a route is activated. This is useful when you need to pre-fetch data 
+// Resolvers in Angular are used to fetch data before a route is activated. This is useful when you need to pre-fetch data
 // (e.g., user data) before displaying the component, which ensures the component has all the necessary data when it's rendered.
-// The resolveUserName function uses Angular's activatedRoute.paramMap to access the route's userId parameter, 
+// The resolveUserName function uses Angular's activatedRoute.paramMap to access the route's userId parameter,
 // which was passed in the URL (e.g., /users/123).
 // It then uses the UsersService to search for the user in the users array based on the userId.
 // The function returns the user's name (or an empty string if not found).
 // This resolved value is passed to the component via the resolve property in the route configuration (app.routes.ts)
+
+export const resolveTitle: ResolveFn<string> = (
+  activatedRoute,
+  routerState
+) => {
+  return resolveUserName(activatedRoute, routerState) + '\'s Tasks';
+};
+// resolveTitle is a resolver: It uses the ResolveFn type, which ensures the resolver runs before the route is activated, 
+// allowing you to pre-fetch data that the component needs.
+// Invoking resolveUserName: Inside the resolveTitle function, it calls the resolveUserName function, 
+// which fetches the name of the user based on the userId parameter in the route.
+// After resolveUserName returns the user's name, the resolveTitle function concatenates the name with the string '\'s Tasks'. 
+// This results in a title like: "David Miller's Tasks" if the user's name is David Miller
