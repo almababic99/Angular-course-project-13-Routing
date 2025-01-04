@@ -19,9 +19,13 @@ export const routes: Routes = [
     path: 'tasks', // localhost:4200/users/<userId>/tasks
     component: TasksComponent,
     // /users/:userId/tasks will render the TasksComponent.
-    runGuardsAndResolvers: 'paramsOrQueryParamsChange',
+    // runGuardsAndResolvers: 'paramsOrQueryParamsChange',
     // The runGuardsAndResolvers: 'paramsOrQueryParamsChange' ensures that the resolver is re-run if either the route parameters or query 
     // parameters change. This is useful for keeping the task list updated when the userId or order changes.
+    runGuardsAndResolvers: 'always',
+    // runGuardsAndResolvers: 'always': This configuration ensures that Angular’s guards and resolvers are always run, 
+    // even if the parameters or query parameters haven't changed. 
+    // This is useful if you want to reload or refetch the user tasks every time the user navigates to this path.
     resolve: {
       userTasks: resolveUserTasks,
     },
