@@ -2,7 +2,7 @@ import { Component, inject, input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { TasksService } from '../tasks.service';
-import { Router, RouterLink } from '@angular/router';
+import { CanDeactivateFn, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-new-task',
@@ -20,6 +20,9 @@ export class NewTaskComponent {
   enteredDate = signal('');
   // These are reactive signals that hold the values entered in the form. 
   // The signals are used for form inputs, meaning their values will automatically update whenever the user types something in the fields.
+
+  submitted = false;
+  // When the component is first loaded, the submitted flag is set to false. This indicates that the user has not yet submitted the form.
 
   private tasksService = inject(TasksService);
   // This is the injected service that is responsible for adding tasks to the task list.
@@ -39,6 +42,11 @@ export class NewTaskComponent {
     // It calls the addTask method of the TasksService to add a new task, passing in the task details (title, summary, and due date) 
     // as well as the userId.
 
+    this.submitted = true;
+    // By setting submitted = true, the component now knows that the user has completed the form submission. 
+    // This will be important for the CanDeactivate route guard to decide whether to show the confirmation dialog when the user 
+    // tries to navigate away from the page.
+
     // After the task is added, it navigates to the user's task list page using this.router.navigate(). 
     // This redirect ensures that the user is taken to the updated list of tasks for the current user:
     // if this.userId() is 'u3', the resulting URL would be /users/u3/tasks. 
@@ -50,4 +58,21 @@ export class NewTaskComponent {
       // button will now take them to the previous page before the task creation.
     });
   }
+}
+
+export const canLeaveEditPage: CanDeactivateFn<NewTaskComponent> = (component) => {
+  if (component.submitted) {  // This condition checks whether the form has already been submitted (component.submitted is true).
+    return true;
+  } // If the form has been submitted, there's no need to warn the user about unsaved data, so the guard returns true, 
+    // allowing the navigation to proceed without any prompts.
+  if (component.enteredTitle() || component.enteredDate() || component.enteredSummary()) {
+    // If the user has entered any data in the form fields (enteredTitle, enteredSummary, or enteredDate), 
+    // the guard shows a confirmation dialog using window.confirm().
+    // The message displayed asks if the user is sure they want to leave without saving data. If the user clicks OK the navigation proceeds. 
+    // If they click Cancel, the navigation is blocked, and the user stays on the page.
+    return window.confirm('Do you really want to leave? You will lose the entered data.')
+  }
+  return true;
+  // If there is no entered data (i.e., all the form fields are empty), the guard simply returns true, 
+  // allowing the navigation to proceed without any confirmation dialog.
 }

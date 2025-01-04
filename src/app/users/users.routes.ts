@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { resolveUserTasks, TasksComponent } from '../tasks/tasks.component';
-import { NewTaskComponent } from '../tasks/new-task/new-task.component';
+import { canLeaveEditPage, NewTaskComponent } from '../tasks/new-task/new-task.component';
 
 // we use this users.routes.ts in app.routes.ts
 
@@ -33,5 +33,8 @@ export const routes: Routes = [
     path: 'tasks/new', // localhost:4200/users/<userId>/tasks/new
     component: NewTaskComponent,
     // /users/:userId/tasks/new will render the NewTaskComponent.
+    canDeactivate: [canLeaveEditPage],
+    // whenever the user tries to leave the "New Task" page, Angular will call the canLeaveEditPage guard function 
+    // from new-task.component.ts before proceeding with the navigation.
   },
 ];
